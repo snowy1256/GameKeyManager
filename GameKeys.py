@@ -2,6 +2,7 @@ import sqlite3
 from sqlite3 import Error
 import CreateGamesDB
 # ----- #
+# ---- Database Interactions ---- #
 
 
 # Creates connection to DB
@@ -14,28 +15,44 @@ def createConnection(db_file):
     return None
 
 
-# Add a game to the database
+# Insert Game into database
+def insertGameData(values):
+    # Name, Key and Platform are defined in addGame
+    # conn is connection to db defined in createConnection
+    # Connect to the db
+    conn = createConnection("gameKeys.db")
+    # Simplify cursor to a single letter because why not
+    c = conn.cursor()
+    # Tell sqlite that we want to insert the three values into the DB
+    sql = "insert into Games (Name, Key, Platform) values (?,?,?)"
+    # Excute the addition then commit
+    c.execute(sql, values)
+    conn.commit
+
+
+# ---- User Interactions ---- #
+# Defining game to add to database
 def addGame():
     UserInput = True
-    GamePlatform = 0
     UserConf = False
     while UserInput is True:
         print("Please enter the games name:\n")
         GameName = str(input())
         print("\n\nPlease enter the game key:\n")
         GameKey = str(input())
-        while GamePlatform == 0:
-            choosePlatform()
+        GamePlatform = choosePlatform()
         while UserConf is not True:
             print("Your game is called: ", GameName, "\n")
             print("They key you entered was: ", GameKey, "\n")
             print("The Platform you chose for this game was:", GamePlatform, "\n")
             print("Is this all correct? y/n")
-            UserConf = str(input())
+            UserConf = str(input()).lower
             if UserConf == "y":
                 print("Great, adding to the database!\n")
                 UserInput = False
-                # add code to do that
+                gameInfo = (GameName, GameKey, GamePlatform)
+                insertGameData(gameInfo)
+                break
             else:
                 print("What do you need to change?\n")
                 print("1. Game Name\n2. Game Key\n3. Platform\n4. Everything\n")
@@ -43,11 +60,14 @@ def addGame():
                 if changeInput == 1:
                     print("\nInsert new game name:\n")
                     GameName = str(input())
+                    break
                 elif changeInput == 2:
                     print("Insert new key:\n")
                     GameKey = str(input())
+                    break
                 elif changeInput == 3:
-                    choosePlatform()
+                    GamePlatform = choosePlatform()
+                    break
                 elif changeInput == 4:
                     UserConf = False
                     GamePlatform = False
