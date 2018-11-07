@@ -27,7 +27,7 @@ def insertGameData(values):
     sql = "insert into Games (Name, Key, Platform) values (?,?,?)"
     # Excute the addition then commit
     c.execute(sql, values)
-    conn.commit
+    conn.commit()
 
 
 # ---- User Interactions ---- #

@@ -30,7 +30,24 @@ def create_table(conn, create_table_sql):
     # create table == SQL CREATE TABLE statement
     try:
         c = conn.cursor()
-        c.execute(create_table_sql)
+        c.execute("select name from sqlite_master where name=Games")
+        result = c.fetchall()
+        keep_table = True
+        if len(result) == 1:
+            userIn = input("The table already exists, re-created it? y/n: ")
+            userIn = userIn.lower()
+            if userIn == "y":
+                keep_table = False
+                print("The table will be re-created, all data will be lost ")
+                c.execute("drop table if exists Games")
+                conn.commit()
+            else:
+                print("The exisitng table was kept")
+        else:
+            keep_table = False
+        if not keep_table:
+            c.execute(create_table_sql)
+            conn.commit()
     except Error as e:
         print(e)
 
@@ -42,6 +59,7 @@ def example_data(conn):
             VALUES (?,?,?)'''
     cur = conn.cursor()
     cur.execute(sql, exampledata)
+    conn.commit()
 
 
 # main program
