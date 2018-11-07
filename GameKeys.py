@@ -24,7 +24,7 @@ def insertGameData(values):
     # Simplify cursor to a single letter because why not
     c = conn.cursor()
     # Tell sqlite that we want to insert the three values into the DB
-    sql = "insert into Games (Name, Key, Platform) values (?,?,?)"
+    sql = "insert into Games (Name, Key, Platform, Redeemed) values (?,?,?,0)"
     # Excute the addition then commit
     c.execute(sql, values)
     conn.commit()
@@ -74,6 +74,19 @@ def addGame():
                     break
 
 
+def gameSearch(Name):
+    conn = createConnection("gamesKeys.db")
+    c = conn.cursor()
+    
+
+
+# search the database for input
+def searchDB(dataType, userInput):
+    if dataType == "Name":
+        return None
+
+# Used to chose/change platform of game when adding games
+# In the future this should probably allow for the addition of extra platforms
 def choosePlatform():
     print("Please select platform:\n")
     print("1. Steam\n2. Origin\n3. UPlay")
@@ -89,12 +102,6 @@ def choosePlatform():
     return GamePlatform
 
 
-# search the database for input
-def searchDB(dataType, userInput):
-    if dataType == "Name":
-        return None
-
-
 # Menu
 def menu():
     print("What do you want to do?\n\n")
@@ -105,6 +112,11 @@ def menu():
     userIn = int(input())
     if userIn == 1:
         addGame()
+    if userIn == 2:
+        print("What game are you looking for?")
+        GameName = str(input())
+        GameName = GameName.lower()
+        gameSearch(GameName)
     if userIn == 3:
         print("This is likely to delete all data do you wish to continue? y/n\n")
         confirm = input()
