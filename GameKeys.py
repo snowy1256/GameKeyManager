@@ -46,10 +46,11 @@ def addGame():
             print("They key you entered was: ", GameKey, "\n")
             print("The Platform you chose for this game was:", GamePlatform, "\n")
             print("Is this all correct? y/n")
-            UserConf = str(input()).lower
+            UserConf = str(input())
             if UserConf == "y":
                 print("Great, adding to the database!\n")
                 UserInput = False
+                UserConf = True
                 gameInfo = (GameName, GameKey, GamePlatform)
                 insertGameData(gameInfo)
                 break
@@ -60,11 +61,9 @@ def addGame():
                 if changeInput == 1:
                     print("\nInsert new game name:\n")
                     GameName = str(input())
-                    break
                 elif changeInput == 2:
                     print("Insert new key:\n")
                     GameKey = str(input())
-                    break
                 elif changeInput == 3:
                     GamePlatform = choosePlatform()
                     break

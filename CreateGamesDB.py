@@ -5,11 +5,12 @@ from sqlite3 import Error
 
 # Defining tables for future use
 def tables():
-    sql_create_Games_table = """ CREATE TABLE IF NOT EXISTS Games(
-        id integer PRIMARY KEY,
-        name text NOT NULL,
-        key text NOT NULL,
-        platform text NOT NULL);"""
+    sql_create_Games_table = """ Create table Games(
+        ID integer,
+        Name text NOT NULL,
+        Key text NOT NULL,
+        Platform text NOT NULL,
+        Primary key(ID))"""
     return sql_create_Games_table
 
 
@@ -57,3 +58,7 @@ def main():
     userIn = str(input())
     if userIn == "y":
         example_data(conn)
+
+
+if __name__ == '__main__':
+    main()
