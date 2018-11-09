@@ -128,21 +128,23 @@ def menu():
     print("3. (Re)Create Database WARNING: This will likely delete all data\n")
     print("4. Exit")
 
-    userIn = int(input())
-    if userIn == 1:
+    userIn = input()
+    if userIn == "1":
         addGame()
-    if userIn == 2:
+    if userIn == "2":
         print("What game are you looking for?")
         GameName = str(input())
         GameName = GameName.lower()
         gameSearch(GameName)
-    if userIn == 3:
+    if userIn == "3":
         print("This is likely to delete all data do you wish to continue? y/n\n")
         confirm = input()
         if confirm == "y":
             CreateGamesDB.main()
-    if userIn == 4:
-        sys.exit()
+    if userIn == "4":
+        print("Thanks for playing!")
+    else:
+        print("Invalid entry, try again")
 
 
 if __name__ == '__main__':
