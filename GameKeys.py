@@ -24,7 +24,7 @@ def insertGameData(values):
     # Simplify cursor to a single letter because why not
     c = conn.cursor()
     # Tell sqlite that we want to insert the three values into the DB
-    sql = "insert into Games (Name, Key, Platform, Redeemed) values (?,?,?,0)"
+    sql = "INSERT INTO Games (Name, Key, Platform, Redeemed) values (?,?,?,0)"
     # Excute the addition then commit
     c.execute(sql, values)
     conn.commit()
@@ -75,15 +75,19 @@ def addGame():
 
 
 def gameSearch(Name):
-    conn = createConnection("gamesKeys.db")
+    conn = createConnection("gameKeys.db")
     c = conn.cursor()
-    
+    c.execute('''SELECT Name FROM Games WHERE Name =? COLLATE NOCASE''', (Name,))
+    all_rows = c.fetchall()
+    for row in all_rows:
+        print(row[0])
 
 
 # search the database for input
 def searchDB(dataType, userInput):
     if dataType == "Name":
         return None
+
 
 # Used to chose/change platform of game when adding games
 # In the future this should probably allow for the addition of extra platforms
