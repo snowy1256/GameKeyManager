@@ -1,5 +1,6 @@
 import sqlite3
 from sqlite3 import Error
+import sys
 import CreateGamesDB
 # ----- #
 # ---- Database Interactions ---- #
@@ -75,15 +76,28 @@ def addGame():
 
 
 def gameSearch(Name):
-    conn = createConnection("gameKeys.db")
-    c = conn.cursor()
-    c.execute('''SELECT Name FROM Games WHERE Name =? COLLATE NOCASE''', (Name,))
-    all_rows = c.fetchall()
-    for row in all_rows:
-        print(row[0])
+    searching = True
+    while searching is True:
+        conn = createConnection("gameKeys.db")
+        c = conn.cursor()
+        c.execute('''SELECT Name FROM Games WHERE Name LIKE ? COLLATE NOCASE''', ('%'+Name+'%',))
+        all_rows = c.fetchall()
+        resultCount = len(all_rows)
+        if resultCount < 1:
+            print("No games by that name found, sorry")
+        else:
+            for row in all_rows:
+                print("Game: ", row[0])
+        print("Search again? y/n?\n")
+        userIn = input()
+        if userIn == "n":
+            searching = False
+        else:
+            print("What game would are you looking for?")
+            Name = str(input())
 
 
-# search the database for input
+# CURRENT NOT IN USE search the database for input
 def searchDB(dataType, userInput):
     if dataType == "Name":
         return None
@@ -112,6 +126,7 @@ def menu():
     print("1. Add a game\n")
     print("2. Search for a game\n")
     print("3. (Re)Create Database WARNING: This will likely delete all data\n")
+    print("4. Exit")
 
     userIn = int(input())
     if userIn == 1:
@@ -126,7 +141,11 @@ def menu():
         confirm = input()
         if confirm == "y":
             CreateGamesDB.main()
+    if userIn == 4:
+        sys.exit()
 
 
 if __name__ == '__main__':
-    menu()
+    mainLoop = True
+    while mainLoop is True:
+        menu()
