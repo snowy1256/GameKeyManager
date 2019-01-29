@@ -1,0 +1,14 @@
+Database:
+
+Game Name with key
+Redemption status
+Redemption Platform
+
+GUI
+Search Box (By game name) - remove uppercases
+List of keys (table) - redeemed? tick box
+
+Add key button
+-Game Name
+-key
+-Platform dropdown (option to add new platform)

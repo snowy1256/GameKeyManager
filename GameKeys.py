@@ -122,32 +122,37 @@ def choosePlatform():
 
 # Menu
 def menu():
-    print("What do you want to do?\n\n")
-    print("1. Add a game\n")
-    print("2. Search for a game\n")
-    print("3. (Re)Create Database WARNING: This will likely delete all data\n")
-    print("4. Exit")
+    exit = False
+    while exit is not True:
+        print("What do you want to do?\n\n")
+        print("1. Add a game\n")
+        print("2. Search for a game\n")
+        print("3. (Re)Create Database WARNING: This will likely delete all data\n")
+        print("4. Exit")
 
-    userIn = input()
-    if userIn == "1":
-        addGame()
-    if userIn == "2":
-        print("What game are you looking for?")
-        GameName = str(input())
-        GameName = GameName.lower()
-        gameSearch(GameName)
-    if userIn == "3":
-        print("This is likely to delete all data do you wish to continue? y/n\n")
-        confirm = input()
-        if confirm == "y":
-            CreateGamesDB.main()
-    if userIn == "4":
-        print("Thanks for playing!")
+        userIn = input()
+        if userIn == "1":
+            addGame()
+        if userIn == "2":
+            print("What game are you looking for?")
+            GameName = str(input())
+            GameName = GameName.lower()
+            gameSearch(GameName)
+        if userIn == "3":
+            print("This is likely to delete all data do you wish to continue? y/n\n")
+            confirm = input()
+            if confirm == "y":
+                CreateGamesDB.main()
+        if userIn == "4":
+            print("Thanks for playing!")
+            exit = True
+        else:
+            print("Invalid entry, try again")
     else:
-        print("Invalid entry, try again")
+        print("Goodbye!")
 
 
-if __name__ == '__main__':
-    mainLoop = True
-    while mainLoop is True:
-        menu()
+def main():
+   menu()
+
+if __name__ == '__main__': main()
