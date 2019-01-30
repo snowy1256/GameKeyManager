@@ -12,3 +12,7 @@ Add key button
 -Game Name
 -key
 -Platform dropdown (option to add new platform)
+
+
+Automation
+-Automate reading of the current excel spreadsheet and adding the keys to the db

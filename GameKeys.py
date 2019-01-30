@@ -2,6 +2,7 @@ import sqlite3
 from sqlite3 import Error
 import sys
 import CreateGamesDB
+from tkinter import messagebox
 # ----- #
 # ---- Database Interactions ---- #
 
@@ -76,25 +77,17 @@ def addGame():
 
 
 def gameSearch(Name):
-    searching = True
-    while searching is True:
-        conn = createConnection("gameKeys.db")
-        c = conn.cursor()
-        c.execute('''SELECT Name FROM Games WHERE Name LIKE ? COLLATE NOCASE''', ('%'+Name+'%',))
-        all_rows = c.fetchall()
-        resultCount = len(all_rows)
-        if resultCount < 1:
-            print("No games by that name found, sorry")
-        else:
-            for row in all_rows:
-                print("Game: ", row[0])
-        print("Search again? y/n?\n")
-        userIn = input()
-        if userIn == "n":
-            searching = False
-        else:
-            print("What game would are you looking for?")
-            Name = str(input())
+    #searching = True
+    #while searching is True:
+     conn = createConnection("gameKeys.db")
+     c = conn.cursor()
+     c.execute('''SELECT Name, Key, Platform, Redeemed FROM Games WHERE Name LIKE ? COLLATE NOCASE''', ('%'+Name+'%',))
+     all_rows = c.fetchall()
+     resultCount = len(all_rows) #check length of all_rows
+     if resultCount < 1: #If no games are found
+         return all_rows
+     else:
+         return all_rows
 
 
 # CURRENT NOT IN USE search the database for input
