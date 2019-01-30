@@ -16,3 +16,4 @@ Add key button
 
 Automation
 -Automate reading of the current excel spreadsheet and adding the keys to the db
+-- This will also be useful for doing key-dumps rather than adding them one by one manually
