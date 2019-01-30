@@ -15,10 +15,11 @@ def SearchBegin():
         messagebox.showerror(title = "No Input", message = "Please put something into the search box")
     else:
         games = GameKeys.gameSearch(searchString)
-        resultCount = len(games)
-        if resultCount < 1:
+        resultCount = len(games) #Check how many results are returned
+        if resultCount < 1: #If there is less than one result create an error dialog
             messagebox.showinfo(title = "No games found", message= "No games found")
-        elif firstSearch is True:
+            previousResultCount = resultCount
+        elif firstSearch is True: #if this is the first search since boot (gloabl variable)
                 firstSearch = False
                 i = 0
                 for x in games:
@@ -26,21 +27,29 @@ def SearchBegin():
                         uniqueID = f"Game{i}"
                         resultsTree.insert("","end", iid=uniqueID, values = [x[0], x[1], x[2]] )
                         i = i + 1
+                    elif x[3] != 0: #If games were found but were all flagged as redeemed
+                        previousResultCount = 0
                 previousResultCount = resultCount
         else: #First we must clear the list before adding new games to it
+            currentNoResults = len(resultsTree.get_children())
             i = 0
-            loopCount = 0
-            while loopCount != previousResultCount and previousResultCount > 0:
-                uniqueID = f"Game{i}"
-                resultsTree.delete(uniqueID)
+            while currentNoResults > 0:
+                uniquedelID = f"Game{i}"
+                resultsTree.delete(uniquedelID)
                 i = i + 1
-                loopCount = loopCount + 1
-            i = 0 #reset i to 0
+                currentNoResults = currentNoResults - 1
+            if i > 0: 
+                i = 0 #reset i to 0
             for x in games:
                     if x[3] != 1: #Check game isn't flagged as redeemed
                         uniqueID = f"Game{i}"
                         resultsTree.insert("","end", iid=uniqueID, values = [x[0], x[1], x[2]] )
                         i = i + 1
+                    elif x[3] != 0 and resultCount == 1 and previousResultCount < 1: #If games were found but were all flagged as redeemed AND previous search also had no results
+                        resultCount = 0
+                        messagebox.showinfo(title = "No games found", message= "No unredeemed games found")
+                    elif x[3] != 0 and resultCount > 1:
+                        resultCount = resultCount - 1
             previousResultCount = resultCount
 
 
