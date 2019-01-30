@@ -4,7 +4,7 @@ manages my endless spare game keys, keeping them nice and organised in a databas
 
 # Currently completed features
 * GUI for searching database
-** Games display, with keys and platform. Games marked as redeemed do not show up
+    * Games display, with keys and platform. Games marked as redeemed do not show up
 
 * Non-GUI driven adding of games to database
 * Non-GUI driven re-creation of database
