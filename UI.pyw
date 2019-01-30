@@ -4,8 +4,11 @@ from tkinter import messagebox
 import GameKeys
 
 root = Tk()
-
+firstSearch = True
+previousResultCount = 0
 def SearchBegin():
+    global firstSearch
+    global previousResultCount
     searchString = searchbox.get()
     checkInput = len(searchString)
     if checkInput < 1:
@@ -15,10 +18,31 @@ def SearchBegin():
         resultCount = len(games)
         if resultCount < 1:
             messagebox.showinfo(title = "No games found", message= "No games found")
-        else:
+        elif firstSearch is True:
+                firstSearch = False
+                i = 0
                 for x in games:
                     if x[3] != 1: #Check game isn't flagged as redeemed
-                        resultsTree.insert("","end", iid=None, values = [x[0], x[1], x[2]] )
+                        uniqueID = f"Game{i}"
+                        resultsTree.insert("","end", iid=uniqueID, values = [x[0], x[1], x[2]] )
+                        i = i + 1
+                previousResultCount = resultCount
+        else: #First we must clear the list before adding new games to it
+            i = 0
+            loopCount = 0
+            while loopCount != previousResultCount and previousResultCount > 0:
+                uniqueID = f"Game{i}"
+                resultsTree.delete(uniqueID)
+                i = i + 1
+                loopCount = loopCount + 1
+            i = 0 #reset i to 0
+            for x in games:
+                    if x[3] != 1: #Check game isn't flagged as redeemed
+                        uniqueID = f"Game{i}"
+                        resultsTree.insert("","end", iid=uniqueID, values = [x[0], x[1], x[2]] )
+                        i = i + 1
+            previousResultCount = resultCount
+
 
 #Menus
 topmenu = Menu(tearoff = 0, title = "File")
