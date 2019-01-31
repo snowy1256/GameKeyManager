@@ -52,6 +52,16 @@ def SearchBegin():
                         resultCount = resultCount - 1
             previousResultCount = resultCount
 
+#Double click copy to clipboard and set redeemed
+def CopyKey(a):
+    selection = resultsTree.focus()
+    print (resultsTree.item(selection, "values"))
+    gameInfo = (resultsTree.item(selection, "values"))
+    key = gameInfo[1]
+    print (key)
+    resultsTree.clipboard_append(gameInfo)
+    GameKeys.setRedeemed(gameInfo[0], key)
+
 
 #Menus
 topmenu = Menu(tearoff = 0, title = "File")
@@ -73,7 +83,6 @@ searchbox.grid(column = 0, row = 0, columnspan = 3, sticky = "ew")
 searchButton = ttk.Button(searchFrame, text = "Search", command = SearchBegin)
 searchButton.grid(column = 3, row = 0, columnspan = 2)
 
-
 #Tree menu for results of search
 resultsTree = ttk.Treeview(searchFrame, columns= ("Game", "Key", "Platform"))
 resultsTree.grid(column = 0, row = 1, columnspan = 4)
@@ -89,6 +98,9 @@ searchScroll = ttk.Scrollbar(searchFrame, orient = VERTICAL, command = resultsTr
 searchScroll.grid(column = 4, row = 1, rowspan = 3, sticky = "ns")
 resultsTree.config(yscrollcommand = searchScroll.set)
 
+#Mouse interactions
+
+resultsTree.bind("<Double-Button-1>", CopyKey) #On double click of key
 
 #Results
 #games = [("Game 1", "2839801732"),("Game 11", "2839801732"),("Game 10", "2839801732"),("Game 9", "2839801732"),("Game 8", "2839801732"),("Game 7", "2839801732"),("Game 6", "2839801732"),("Game 5", "2839801732"),("Game 4", "2839801732"),("Game 3", "2839801732"),("Game 2", "2839801732"),]

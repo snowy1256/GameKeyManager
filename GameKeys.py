@@ -2,7 +2,7 @@ import sqlite3
 from sqlite3 import Error
 import sys
 import CreateGamesDB
-from tkinter import messagebox
+
 # ----- #
 # ---- Database Interactions ---- #
 
@@ -30,6 +30,20 @@ def insertGameData(values):
     # Excute the addition then commit
     c.execute(sql, values)
     conn.commit()
+
+def setRedeemed(Name, Key):
+    #Connect
+    conn = createConnection("gameKeys.db")
+    c = conn.cursor()
+    sql = '''UPDATE Games 
+    SET Redeemed = ? 
+    WHERE Key = ?'''
+    redeemed = 1
+    values = (redeemed, Key)
+    print(values)
+    c.execute(sql, values)
+    conn.commit()
+    
 
 
 # ---- User Interactions ---- #
