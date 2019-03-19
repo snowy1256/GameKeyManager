@@ -48,46 +48,9 @@ def setRedeemed(Name, Key):
 
 # ---- User Interactions ---- #
 # Defining game to add to database
-def addGame():
-    UserInput = True
-    UserConf = False
-    while UserInput is True:
-        print("Please enter the games name:\n")
-        GameName = str(input())
-        print("\n\nPlease enter the game key:\n")
-        GameKey = str(input())
-        GamePlatform = choosePlatform()
-        while UserConf is not True:
-            print("Your game is called: ", GameName, "\n")
-            print("They key you entered was: ", GameKey, "\n")
-            print("The Platform you chose for this game was:", GamePlatform, "\n")
-            print("Is this all correct? y/n")
-            UserConf = str(input())
-            if UserConf == "y":
-                print("Great, adding to the database!\n")
-                UserInput = False
-                UserConf = True
-                gameInfo = (GameName, GameKey, GamePlatform)
-                insertGameData(gameInfo)
-                break
-            else:
-                print("What do you need to change?\n")
-                print("1. Game Name\n2. Game Key\n3. Platform\n4. Everything\n")
-                changeInput = int(input())
-                if changeInput == 1:
-                    print("\nInsert new game name:\n")
-                    GameName = str(input())
-                elif changeInput == 2:
-                    print("Insert new key:\n")
-                    GameKey = str(input())
-                elif changeInput == 3:
-                    GamePlatform = choosePlatform()
-                    break
-                elif changeInput == 4:
-                    UserConf = False
-                    GamePlatform = False
-                    UserInput = True
-                    break
+def addGame(gameName, gameKey, gamePlatform):           
+    gameInfo = (gameName, gameKey, gamePlatform)
+    insertGameData(gameInfo)
 
 
 def gameSearch(Name):

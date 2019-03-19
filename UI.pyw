@@ -62,6 +62,19 @@ def CopyKey(a):
     resultsTree.clipboard_append(gameInfo)
     GameKeys.setRedeemed(gameInfo[0], key)
 
+## Add game from entry in form
+
+def addGameBegin ():
+    gName = gameName.get()
+    gKey = gameKey.get()
+    gPlatform = platformVar.get()
+    GameKeys.addGame(gName, gKey, gPlatform)
+
+
+## Add games from excel file
+def LoadKeysFile ():
+    print("add keys from file")
+
 
 #Menus
 topmenu = Menu(tearoff = 0, title = "File")
@@ -70,6 +83,8 @@ topmenu = Menu(tearoff = 0, title = "File")
 #Tabs
 notebook = ttk.Notebook(root)
 notebook.pack()
+
+
 
 #Create frames to add to notebook
 searchFrame = ttk.Frame(notebook, padding = 5)
@@ -97,6 +112,32 @@ resultsTree.heading("Platform", text = "Platform")
 searchScroll = ttk.Scrollbar(searchFrame, orient = VERTICAL, command = resultsTree.yview)
 searchScroll.grid(column = 4, row = 1, rowspan = 3, sticky = "ns")
 resultsTree.config(yscrollcommand = searchScroll.set)
+
+### Add game UI
+
+##Platforms
+platformVar = StringVar(root) ##Tk Variable
+Platforms = {"Steam", "UPlay", "Origin"} #Platforms 
+platformVar.set ("Steam")
+
+##Add Game Frame
+gameNameLabel = ttk.Label(addFrame, text = "Game Name:")
+gameNameLabel.grid(column = 0, row = 0, padx = "2", pady = "5")
+gameName = ttk.Entry(addFrame, width = 60)
+gameName.grid(column = 1, row = 0, columnspan = 2, sticky = "ew", padx = "10", pady = "5")
+gameKeyLabel = ttk.Label(addFrame, text = "Key:")
+gameKeyLabel.grid(column = 0, row = 2, padx = "2", pady = "5")
+gameKey = ttk.Entry(addFrame, width = 60)
+gameKey.grid(column = 1, row = 2, columnspan = 2, stick = "ew", padx = "10", pady = "5" )
+gamePlatformLabel = ttk.Label(addFrame, text = "Platform:")
+gamePlatformLabel.grid(column = 0, row = 3, padx = "2", pady = "5")
+gamePlatform = OptionMenu(addFrame, platformVar, *Platforms)
+gamePlatform.grid(column = 1, row = 3, columnspan = "2", padx = "10", pady = "5", sticky = "ew")
+gameaddButton = ttk.Button(addFrame, text = "Add Game", command = addGameBegin)
+gameaddButton.grid(column = 1, row = 4, sticky = "ew")
+addFromFileButton = ttk.Button(addFrame, text = "Add from file", command = LoadKeysFile)
+addFromFileButton.grid(column = 2, row = 4, sticky = "ew")
+
 
 #Mouse interactions
 
